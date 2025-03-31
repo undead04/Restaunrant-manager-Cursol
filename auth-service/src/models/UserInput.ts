@@ -10,13 +10,13 @@ import {
 } from "class-validator";
 import { EnumRole } from "../types/EnumRole";
 import { MatchPassword } from "../validators/match-password.validator";
+import { Transform } from "class-transformer";
 
 export class UserInput {
   @IsEmail({}, { message: "Email is invalid" })
   @IsNotEmpty({ message: "Email is required" })
   email!: string;
 
-  @IsPhoneNumber("VN", { message: "Phone is invalid" })
   @IsNotEmpty({ message: "Phone is required" })
   phone!: string;
 
@@ -30,6 +30,34 @@ export class UserInput {
     }
   )
   password!: string;
+
+  @IsString({ message: "Address is invalid" })
+  @IsNotEmpty({ message: "Address is required" })
+  address!: string;
+
+  @IsString({ message: "First name is invalid" })
+  @IsNotEmpty({ message: "First name is required" })
+  firstName!: string;
+
+  @IsString({ message: "Last name is invalid" })
+  @IsNotEmpty({ message: "Last name is required" })
+  lastName!: string;
+
+  @IsString({ message: "Url image is invalid" })
+  @IsOptional({ message: "Url image is optional" })
+  url_Image!: string;
+
+  @IsEnum(EnumRole, { message: "Role is invalid" })
+  @IsNotEmpty({ message: "Role is required" })
+  role!: EnumRole;
+}
+export class UpdateUserInput {
+  @IsEmail({}, { message: "Email is invalid" })
+  @IsNotEmpty({ message: "Email is required" })
+  email!: string;
+
+  @IsNotEmpty({ message: "Phone is required" })
+  phone!: string;
 
   @IsString({ message: "Address is invalid" })
   @IsNotEmpty({ message: "Address is required" })

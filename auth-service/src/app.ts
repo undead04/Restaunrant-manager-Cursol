@@ -8,7 +8,8 @@ import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger";
-
+import runSeeds from "./database/seeds/user.seed";
+import { errorHandler } from "./middleware/error.middleware";
 dotenv.config();
 
 const app = express();
@@ -25,14 +26,19 @@ app.use("/api/users", userRoutes);
 // Swagger UI
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Error handling middleware
+app.use(errorHandler);
+
 // Database initialization and server start
 AppDataSource.initialize()
   .then(() => {
     console.log("Database connected successfully");
-
+    runSeeds();
     const PORT = process.env.PORT || 3001;
     app.listen(PORT, () => {
-      console.log(`Auth service is running on port ${PORT}`);
+      console.log(
+        `Auth service is running on port ${PORT}, http://localhost:${PORT}`
+      );
     });
   })
   .catch((error) => {

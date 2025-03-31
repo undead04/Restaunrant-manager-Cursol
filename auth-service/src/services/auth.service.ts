@@ -3,6 +3,7 @@ import { User } from "../entities/user.entity";
 import { comparePassword } from "../utils/password.utils";
 import { UserRepository } from "../repositories/user.repository";
 import { LoginInput } from "../models/LoginInput";
+import CustomError from "../models/CustomeError";
 export class AuthService {
   private userRepository = new UserRepository();
 
@@ -12,12 +13,12 @@ export class AuthService {
   }: LoginInput): Promise<{ token: string; user: Partial<User> }> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new Error("Invalid credentials");
+      throw new CustomError(401, "Invalid credentials");
     }
 
     const isValidPassword = await comparePassword(password, user.password);
     if (!isValidPassword) {
-      throw new Error("Invalid credentials");
+      throw new CustomError(401, "Invalid credentials");
     }
 
     const token = this.generateToken(user);

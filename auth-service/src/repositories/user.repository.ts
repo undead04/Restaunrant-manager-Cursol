@@ -1,4 +1,4 @@
-import { Repository, UpdateResult } from "typeorm";
+import { Repository, UpdateResult, DeleteResult } from "typeorm";
 import { AppDataSource } from "../config/database";
 import { User } from "../entities/user.entity";
 import { EnumRole } from "../types/EnumRole";
@@ -67,6 +67,11 @@ export class UserRepository {
 
   async delete(id: string): Promise<boolean> {
     const result = await this.repository.delete(id);
+    return result.affected ? true : false;
+  }
+
+  async deleteMany(ids: string[]): Promise<boolean> {
+    const result: DeleteResult = await this.repository.delete(ids);
     return result.affected ? true : false;
   }
 
