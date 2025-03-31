@@ -229,50 +229,6 @@ router.get(
 
 /**
  * @swagger
- * /api/users/{id}:
- *   get:
- *     summary: Get user by ID (Admin only)
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: User details retrieved successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 message:
- *                   type: string
- *                 data:
- *                   $ref: '#/components/schemas/User'
- *                 statusCode:
- *                   type: number
- *       401:
- *         $ref: '#/components/responses/UnauthorizedError'
- *       403:
- *         $ref: '#/components/responses/ForbiddenError'
- *       404:
- *         description: User not found
- */
-router.get(
-  "/:id",
-  authenticateToken as RequestHandler,
-  adminOnly as RequestHandler,
-  userController.getUserById.bind(userController) as RequestHandler
-);
-
-/**
- * @swagger
  * /api/users:
  *   post:
  *     summary: Create new user (Admin only)
@@ -468,50 +424,6 @@ router.put(
 
 /**
  * @swagger
- * /api/users/{id}:
- *   delete:
- *     summary: Delete user (Admin only)
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: User deleted successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 message:
- *                   type: string
- *                 data:
- *                   type: null
- *                 statusCode:
- *                   type: number
- *       401:
- *         $ref: '#/components/responses/UnauthorizedError'
- *       403:
- *         $ref: '#/components/responses/ForbiddenError'
- *       404:
- *         description: User not found
- */
-router.delete(
-  "/:id",
-  authenticateToken as RequestHandler,
-  adminOnly as RequestHandler,
-  userController.deleteUser.bind(userController) as RequestHandler
-);
-
-/**
- * @swagger
  * /api/users/batch:
  *   delete:
  *     summary: Delete multiple users (Admin only)
@@ -598,6 +510,50 @@ router.delete(
   authenticateToken as RequestHandler,
   adminOnly as RequestHandler,
   userController.deleteUsers.bind(userController) as RequestHandler
+);
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Delete user (Admin only)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: null
+ *                 statusCode:
+ *                   type: number
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/ForbiddenError'
+ *       404:
+ *         description: User not found
+ */
+router.delete(
+  "/:id",
+  authenticateToken as RequestHandler,
+  adminOnly as RequestHandler,
+  userController.deleteUser.bind(userController) as RequestHandler
 );
 
 /**
@@ -692,3 +648,46 @@ router.post(
 );
 
 export default router;
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get user by ID (Admin only)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *                 statusCode:
+ *                   type: number
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       403:
+ *         $ref: '#/components/responses/ForbiddenError'
+ *       404:
+ *         description: User not found
+ */
+router.get(
+  "/:id",
+  authenticateToken as RequestHandler,
+  adminOnly as RequestHandler,
+  userController.getUserById.bind(userController) as RequestHandler
+);
